@@ -1,8 +1,5 @@
 (() => {
-  function copyToClipboard(text) {
-    window.prompt("Copy to clipboard: Ctrl+C, Enter", text);
-  }
-
+  
   function jsDate2bibTex(date) {
     let dd = date.getDate();
     let mm = date.getMonth() + 1;
@@ -40,11 +37,13 @@
   // create citation key:
   const citationKey = `${title_key}-${date}`;
 
-  const type = "@Online";
-  const filename = `:./references/${window.location.pathname
-    .slice(1)
-    .replace(/\//g, "-")}.html:html`;
 
+  let type = "@Online";
+
+  if (url.startsWith("https://www.youtube.com") || url.startsWith("https://vimeo.com")) {
+    type = "@Video";
+  }
+  
   // Replace german umlauts with latex commands:
   let title_tex = title
     .replace(/\u00e4/g, '\\"a')
@@ -60,10 +59,10 @@
 \ \ title = {${title_tex}},\r\
 \ \ date = {${date}},\r\
 ${author ? `\ \ author = {${author}},\r` : ""}\
-\ \ file = {${filename}},\r\
 \ \ url = {${url}},\r\
 \ \ urldate = {${urldate}}\r\
 }`;
 
-  copyToClipboard(bibTexEntry);
+  window.prompt("Copy to clipboard: Ctrl+C, Enter", bibTexEntry);
+  
 })();
