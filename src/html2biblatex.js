@@ -19,17 +19,19 @@
     return `${yyyy}-${mm}-${dd}`;
   }
 
-  const title = document.title;
+  let title = document.title;
   const url = document.URL;
 
   // get author if meta tag exists:
   const author_tag = document.querySelector("[name=author]");
-  const author = author_tag == null ? "" : author_tag.content;
+  let author = author_tag == null ? "" : author_tag.content;
+  let type = "@Article";
+
 
   const today = new Date();
   const urldate = jsDate2bibTex(today);
 
-  const date = jsDate2bibTex(new Date(document.lastModified));
+  let date = jsDate2bibTex(new Date(document.lastModified));
 
   // remove special characters for citation key:
   let title_key = title.replace(/[^0-9a-z]/gi, "");
@@ -37,13 +39,15 @@
   // create citation key:
   const citationKey = `${title_key}-${date}`;
 
-
-  let type = "@Online";
-
-  if (url.startsWith("https://www.youtube.com") || url.startsWith("https://vimeo.com")) {
+  // youtube specific
+  if (url.startsWith("https://www.youtube.com")) {
     type = "@Video";
+    author = window['ytInitialPlayerResponse']["videoDetails"]["author"];
+    title = window['ytInitialPlayerResponse']["videoDetails"]["title"];
+  } else if (url.startsWith("https://vimeo.com")) {
+    type = "@Video"
   }
-  
+
   // Replace german umlauts with latex commands:
   let title_tex = title
     .replace(/\u00e4/g, '\\"a')
@@ -54,13 +58,25 @@
     .replace(/\u00dc/g, '\\"U')
     .replace(/\u00DF/g, '\\"s');
 
+  if (author == null || author == "") {
+    author = prompt("No author found - please provide a value: ", "Unknown");
+  }
+
+  let affiliation = prompt("No affiliation found - please provide a value: ", "Unknown");
+
+  date = prompt("Best guess date - please adjust as needed", date);
+
+  let note = prompt("Want to provide a note ? ", "");
+
   // generate BiBTeX entry:
   const bibTexEntry = `${type} {${citationKey},\r\
-\ \ title = {${title_tex}},\r\
-\ \ date = {${date}},\r\
-${author ? `\ \ author = {${author}},\r` : ""}\
-\ \ url = {${url}},\r\
-\ \ urldate = {${urldate}}\r\
+\ \ title = "${title_tex}",\r\
+\ \ date = "${date}",\r\
+${author ? `\ \ author = "${author}",\r` : ""}\
+${affiliation ? `\ \ affiliation = "${affiliation}",\r` : ""}\
+${note ? `\ \ note = "${note}",\r` : ""}\
+\ \ url = "${url}",\r\
+\ \ urldate = "${urldate}"\r\
 }`;
 
   window.prompt("Copy to clipboard: Ctrl+C, Enter", bibTexEntry);
