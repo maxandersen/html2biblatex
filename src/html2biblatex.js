@@ -25,7 +25,7 @@
   // get author if meta tag exists:
   const author_tag = document.querySelector("[name=author]");
   let author = author_tag == null ? "" : author_tag.content;
-  let type = "@Article";
+  let type = "article";
 
 
   const today = new Date();
@@ -41,11 +41,11 @@
 
   // youtube specific
   if (url.startsWith("https://www.youtube.com")) {
-    type = "@Video";
+    type = "video";
     author = window['ytInitialPlayerResponse']["videoDetails"]["author"];
     title = window['ytInitialPlayerResponse']["videoDetails"]["title"];
   } else if (url.startsWith("https://vimeo.com")) {
-    type = "@Video"
+    type = "video"
   }
 
   // Replace german umlauts with latex commands:
@@ -69,15 +69,16 @@
   let note = prompt("Want to provide a note ? ", "");
 
   // generate BiBTeX entry:
-  const bibTexEntry = `${type} {${citationKey},\r\
-\ \ title = "${title_tex}",\r\
-\ \ date = "${date}",\r\
-${author ? `\ \ author = "${author}",\r` : ""}\
-${affiliation ? `\ \ affiliation = "${affiliation}",\r` : ""}\
-${note ? `\ \ note = "${note}",\r` : ""}\
-\ \ url = "${url}",\r\
-\ \ urldate = "${urldate}"\r\
-}`;
+  const bibTexEntry = `- id: ${citationKey}\r\
+\ \ type: ${type} 
+\ \ title: "${title_tex}"\r\
+\ \ date: "${date}"\r\
+${author ? `\ \ author: "${author}"\r` : ""}\
+${affiliation ? `\ \ affiliation: "${affiliation}"\r` : ""}\
+${note ? `\ \ note: "${note}"\r` : ""}\
+\ \ url: "${url}"\r\
+\ \ urldate: "${urldate}"\r\
+`;
 
   window.prompt("Copy to clipboard: Ctrl+C, Enter", bibTexEntry);
   
