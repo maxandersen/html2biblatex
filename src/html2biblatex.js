@@ -80,6 +80,13 @@ ${note ? `\ \ note: "${note}"\r` : ""}\
 \ \ urldate: "${urldate}"\r\
 `;
 
-  window.prompt("Copy to clipboard: Ctrl+C, Enter", bibTexEntry);
+  let ghurl = "https://github.com/quarkusio/quarkusio.github.io/issues/new?"
+        + "body=" + encodeURIComponent("```\r" + bibTexEntry + "\r```") 
+        + "&title=" + encodeURIComponent("Add " + title_tex + " to Publications")
+        + "&label=publication"
+
+  window.open(ghurl);
+
+  //window.prompt("Copy to clipboard: Ctrl+C, Enter", ghurl);
   
 })();

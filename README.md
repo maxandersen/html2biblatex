@@ -1,17 +1,9 @@
-html2biblatex
-=============
+url2quarkuspub
+==============
 
-> Citing a webpage in LaTeX has never been easier!
+Bookmarklet to make it easier to submit a url to [Quarkus Publications](https://quarkus.io/publications/).
 
-html2biblatex is a lightweight bookmarklet for exporting web pages to BibLaTeX.
-
-_small - flexible - magic!_
-
-Just click on the html2biblatex bookmark button and paste the collected content into your BibLaTeX code.
-
-![Screenshot of popup window to copy the biblatex entry](./screenshot-bookmark.png "html2biblatex Screenshot")
-
-![Screenshot of popup window to copy the biblatex entry](./screenshot-copy.png "html2biblatex Screenshot")
+Just click on the quarkuspub bookmark button, fill out missing/asked for metadata and it will automatically open a browser with an issue.
 
 --------------------------------------------------------
 
@@ -19,34 +11,18 @@ Installation
 ------------
 
  1. Create a new bookmark in the bookmark panel of your browser.
- 2. Name it ("🌐 ➜ 📚" or whatever).
+ 2. Name it ("quarkuspub" or whatever).
  3. URL: [Paste here the content from the file [dist/bookmark-url.js](dist/bookmark-url.js)]
 
 Usage
 -----
 
- 1. Load the page you want to cite.
+ 1. Load the page you want to add to Quarkus Publications.
  2. Click on the new bookmark button.
- 3. Copy the selected text to clipboard and press [ENTER].
- 4. Paste the BibLaTeX entry into
-    * your .bib file.
-    * JabRef: Just paste it into the open bibliography table.
-    * Zotero: Go to 'file' -> 'import from clipboard'.
+ 3. Fill in the missing/asked for metadata [ENTER].
+ 4. A new browser tab will open with a ready filled new issue on https://github.com/quarkusio/quarkusio.github.io
 
-**Sample output:**
-
-```BibLaTeX
-@Online {UsingBibTeXashortguide-2015-11-02,
- title = {Using BibTeX: a short guide},
- date = {2015-11-02},
- author = {Martin J. Osborne},
- file = {:./references/osborne-latex-BIBTEX.HTM.html:html},
- url = {https://www.economics.utoronto.ca/osborne/latex/BIBTEX.HTM},
- urldate = {2018-03-17}
-}
-```
-
-Tested with Google Chrome and Epiphany (GNOME) under Ubuntu 13.10.
+Tested with Google Chrome and Opera on OSX.
 
 --------------------------------------------------------
 
@@ -60,3 +36,10 @@ Build (for developers)
   yarn install
   yarn start
   ```
+
+  for quick testing this one-liner is useful:
+
+  ```bash
+  yarn start; cat dist/bookmark-url.js| pbcopy
+  ```
+  
