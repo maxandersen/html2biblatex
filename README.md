@@ -42,4 +42,7 @@ Build (for developers)
   ```bash
   yarn start; cat dist/bookmark-url.js| pbcopy
   ```
+
+
+  Thanks to https://github.com/dmstern/html2biblatex for the original idea!
   
