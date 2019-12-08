@@ -60,13 +60,17 @@
 
   if (author == null || author == "") {
     author = prompt("No author found - please provide a value: ", "Unknown");
+    if (author == null) return
   }
 
   let affiliation = prompt("No affiliation found - please provide a value: ", "Unknown");
+  if (affiliation == null) return
 
   date = prompt("Best guess date - please adjust as needed", date);
+  if (date == null) return
 
   let note = prompt("Want to provide a note ? ", "");
+  if (note == null) return
 
   // generate BiBTeX entry:
   const bibTexEntry = `- id: ${citationKey}\r\
@@ -83,7 +87,7 @@ ${note ? `\ \ note: "${note}"\r` : ""}\
   let ghurl = "https://github.com/quarkusio/quarkusio.github.io/issues/new?"
         + "body=" + encodeURIComponent("```\r" + bibTexEntry + "\r```") 
         + "&title=" + encodeURIComponent("Add " + title_tex + " to Publications")
-        + "&label=publication"
+        + "&labels=publication"
 
   window.open(ghurl);
 
