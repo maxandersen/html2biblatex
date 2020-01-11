@@ -63,7 +63,7 @@
     if (author == null) return
   }
 
-  let affiliation = prompt("No affiliation found - please provide a value: ", "Unknown");
+  let affiliation = prompt("No affiliation found - empty means no affiliation: ", "");
   if (affiliation == null) return
 
   date = prompt("Best guess date - please adjust as needed", date);
